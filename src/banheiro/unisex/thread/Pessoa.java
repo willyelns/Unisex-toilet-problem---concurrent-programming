@@ -19,22 +19,12 @@ public class Pessoa extends Thread {
 		try{
 			semaforo.acquire();
 			wc.entrar(this);
-			Thread.sleep(tempoNoBanheiro);
+			Thread.sleep(20000);
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("DEU RUIM, PRO CABA(O) ENTRAR");
 		}finally{
 			semaforo.release();
 		}
-		
-		/*Desconsiderar
-		wc.entrar(this);
-		try {
-			Thread.sleep(tempoNoBanheiro * 10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			System.out.println("Tempo não esperado");
-		}
-		wc.sair(this);*/
 	}
 }

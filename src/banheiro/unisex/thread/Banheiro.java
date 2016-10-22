@@ -3,14 +3,12 @@ package banheiro.unisex.thread;
 import java.util.ArrayList;
 
 public class Banheiro {
-	boolean disponivel;
-	int conteudo;
 	ArrayList<Pessoa> vagas;
 	int totalVagas;
 	
 	public Banheiro(int total){
 		vagas = new ArrayList<Pessoa>();
-		
+		totalVagas = total;
 	}
 	
 	public synchronized void entrar(Pessoa pessoa){
@@ -21,11 +19,11 @@ public class Banheiro {
 				}else{
 					System.out.println("Mulher #" + ((Mulher) pessoa).getMulherId() + " está se preparando para entrar");
 				}
-				wait();
+				//wait();
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-			if(vagas.size() == 0){
+			if(vagas.isEmpty()){
 				//Adiciona a pessoa ao banheiro, dando acesso a zona de risco	
 				vagas.add(pessoa);
 				System.out.println("Banheiro com #" + vagas.size() + " pessoa");
@@ -50,24 +48,10 @@ public class Banheiro {
 			System.out.println("Banheiro está cheio");
 		}
 	}
-		
-		/*while(disponivel == true){
-			try{
-				System.out.println("Produtor #" + id + "esperando...");
-				wait();
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-		}
-		conteudo = valor;
-		System.out.println("Produtor #" + id + " Colocou " + valor);
-		disponivel = true;
-		notifyAll();
-	}*/
 	
 	public synchronized void sair(Pessoa pessoa){
 		
-		if(vagas.size() > 0){
+		if(!vagas.isEmpty()){
 			try{
 				if(pessoa instanceof Homem){
 					System.out.println("Homem #" + ((Homem) pessoa).getManId() + " está se preparando para sair");
