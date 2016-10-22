@@ -2,6 +2,8 @@ package banheiro.unisex.thread;
 
 import java.util.concurrent.Semaphore;
 
+import banheiro.unisex.recurso.Banheiro;
+
  public abstract class Pessoa extends Thread {
 	private Banheiro wc;
 	private int tempoNoBanheiro;

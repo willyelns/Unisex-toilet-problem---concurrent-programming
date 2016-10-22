@@ -1,6 +1,10 @@
-package banheiro.unisex.thread;
+package banheiro.unisex.recurso;
 
 import java.util.ArrayList;
+
+import banheiro.unisex.model.Homem;
+import banheiro.unisex.model.Mulher;
+import banheiro.unisex.thread.Pessoa;
 
 public class Banheiro {
 	ArrayList<Pessoa> vagas;

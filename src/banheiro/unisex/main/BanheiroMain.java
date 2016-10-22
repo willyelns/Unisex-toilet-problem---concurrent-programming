@@ -1,7 +1,12 @@
-package banheiro.unisex.thread;
+package banheiro.unisex.main;
 
 import java.util.Random;
 import java.util.concurrent.Semaphore;
+
+import banheiro.unisex.model.Homem;
+import banheiro.unisex.model.Mulher;
+import banheiro.unisex.recurso.Banheiro;
+import banheiro.unisex.thread.Pessoa;
 
 public class BanheiroMain {
 

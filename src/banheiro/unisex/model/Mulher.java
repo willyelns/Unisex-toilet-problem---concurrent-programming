@@ -1,6 +1,9 @@
-package banheiro.unisex.thread;
+package banheiro.unisex.model;
 
 import java.util.concurrent.Semaphore;
+
+import banheiro.unisex.recurso.Banheiro;
+import banheiro.unisex.thread.Pessoa;
 
 public class Mulher extends Pessoa {
 		private int mulherId;
