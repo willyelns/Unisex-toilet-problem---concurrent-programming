@@ -15,28 +15,43 @@ public class Banheiro {
 	
 	public synchronized void entrar(Pessoa pessoa){
 		if(vagas.size() < totalVagas){
+			try{
+				if(pessoa instanceof Homem){
+					System.out.println("Homem #" + ((Homem) pessoa).getManId() + " está se preparando para entrar");
+				}else{
+					System.out.println("Mulher #" + ((Mulher) pessoa).getMulherId() + " está se preparando para entrar");
+				}
+				wait();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 			if(vagas.size() == 0){
-				try{
-					if(pessoa instanceof Homem){
-						System.out.println("Homem #" + ((Homem) pessoa).getManId() + " está se preparando para entrar");
-					}else{
-						System.out.println("Mulher #" + ((Mulher) pessoa).getMulherId() + " está se preparando para entrar");
-					}
-					
-				}catch(Exception e){
-					e.printStackTrace();			}
 				//Adiciona a pessoa ao banheiro, dando acesso a zona de risco	
+				vagas.add(pessoa);
+				System.out.println("Banheiro com #" + vagas.size() + " pessoa");
+				notifyAll();
 			}else{
 				if(pessoa instanceof Homem && vagas.get(0) instanceof Homem){
 					//Adiciona a pessoa ao banheiro, mesma coisa
-					//Ver uso do semáforo aqui
-				}else if(pessoa instanceof Mulher && vagas.get(0) instanceof Mulher)
+					vagas.add(pessoa);
+					System.out.println("Homem #" + ((Homem) pessoa).getManId() + " entrou no banheiro");
+					System.out.println("Banheiro com #" + vagas.size() + " pessoa");
+					notifyAll();
+				}else if(pessoa instanceof Mulher && vagas.get(0) instanceof Mulher){
+					vagas.add(pessoa);
+					System.out.println("Mulher #" + ((Mulher) pessoa).getMulherId() + " entrou no banheiro");
+					System.out.println("Banheiro com #" + vagas.size() + " pessoa");
+					notifyAll();
+				}else{
+					System.out.println("Não se encaixa no padrão do banheiro");
+				}
 			}
 		}else{
 			System.out.println("Banheiro está cheio");
 		}
+	}
 		
-		while(disponivel == true){
+		/*while(disponivel == true){
 			try{
 				System.out.println("Produtor #" + id + "esperando...");
 				wait();
@@ -48,20 +63,38 @@ public class Banheiro {
 		System.out.println("Produtor #" + id + " Colocou " + valor);
 		disponivel = true;
 		notifyAll();
-	}
+	}*/
 	
 	public synchronized void sair(Pessoa pessoa){
-		while(disponivel == true){
+		
+		if(vagas.size() > 0){
 			try{
-				System.out.println("Consumidor " + id + "esperando...");
+				if(pessoa instanceof Homem){
+					System.out.println("Homem #" + ((Homem) pessoa).getManId() + " está se preparando para sair");
+				}else{
+					System.out.println("Mulher #" + ((Mulher) pessoa).getMulherId() + " está se preparando para sair");
+				}
 				wait();
 			}catch(Exception e){
 				e.printStackTrace();
 			}
+			if(pessoa instanceof Homem && vagas.get(0) instanceof Homem){
+				//Remove a pessoa do banheiro
+				vagas.remove(pessoa);
+				System.out.println("Homem #" + ((Homem) pessoa).getManId() + " saiu do banheiro");
+				System.out.println("Banheiro com #" + vagas.size() + " pessoa");
+				notifyAll();
+			}else if(pessoa instanceof Mulher && vagas.get(0) instanceof Mulher){
+				vagas.remove(pessoa);
+				System.out.println("Mulher #" + ((Mulher) pessoa).getMulherId() + " saiu do banheiro");
+				System.out.println("Banheiro com #" + vagas.size() + " pessoa");
+				notifyAll();
+			}else{
+				System.out.println("Não se encaixa no padrão do banheiro");
+			}
+		}else{
+			System.out.println("Banheiro está vazio");
 		}
-		System.out.println("Consumidor " + id + " consumiu o conteudo" + conteudo);
-		disponivel = false;
-		notifyAll();
 	}
 
 	public void tentandoEntrar(Pessoa pessoa) {
