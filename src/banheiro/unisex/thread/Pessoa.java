@@ -2,7 +2,7 @@ package banheiro.unisex.thread;
 
 import java.util.concurrent.Semaphore;
 
-public class Pessoa extends Thread {
+ public abstract class Pessoa extends Thread {
 	private Banheiro wc;
 	private int tempoNoBanheiro;
 	private Semaphore semaforo;
@@ -19,7 +19,8 @@ public class Pessoa extends Thread {
 		try{
 			semaforo.acquire();
 			wc.entrar(this);
-			Thread.sleep(20000);
+			Thread.sleep(tempoNoBanheiro);
+			wc.sair(this);
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("DEU RUIM, PRO CABA(O) ENTRAR");

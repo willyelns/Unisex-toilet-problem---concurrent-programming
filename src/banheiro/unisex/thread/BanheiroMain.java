@@ -1,25 +1,28 @@
 package banheiro.unisex.thread;
 
+import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 public class BanheiroMain {
 
 	public static void main(String[] args) {
+		Random r = new Random();
 	    int numeroDePermicoes = 3;
-	    int numeroDeProcessos = 7;
+	    int numeroDePessoas = 1 + r.nextInt(10);
 	    Banheiro wc = new Banheiro(numeroDePermicoes);
 	    Semaphore semaforo = new Semaphore(numeroDePermicoes);
-	    Homem[] homens = new Homem[3];
-	    //Mulher[] mulheres = new Mulher[4];
-	    for(int i = 0; i < 3; i++){
-	    	homens[i] = new Homem(i, wc, semaforo,((int) Math.random()));
-	    	homens[i].start();
+	    Pessoa[] pessoas = new Pessoa[numeroDePessoas];
+	    
+	    for(int i = 0; i < numeroDePessoas; i++){
+	    	int num = 1 + r.nextInt(100);
+	    	if(num % 2 == 0){
+	    		pessoas[i] = new Homem(i, wc, semaforo, ((int) Math.random()));
+	    	}else{
+	    		pessoas[i] = new Mulher(i, wc, semaforo, ((int) Math.random()));
+	    	}
 	    }
-	    /*for(int i = 0; i < 4; i++){
-	    	mulheres[i] = new Mulher(i, wc, semaforo, ((int) Math.random()));
+	    for(int i = 0; i < numeroDePessoas; i++){
+	    	pessoas[i].start();
 	    }
-	    for(int i = 0; i < 7; i++){
-	    	
-	    }*/
 	}
 }

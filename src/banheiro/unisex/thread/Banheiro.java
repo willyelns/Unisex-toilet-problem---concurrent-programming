@@ -19,7 +19,6 @@ public class Banheiro {
 				}else{
 					System.out.println("Mulher #" + ((Mulher) pessoa).getMulherId() + " está se preparando para entrar");
 				}
-				//wait();
 			}catch(Exception e){
 				e.printStackTrace();
 			}
@@ -33,15 +32,18 @@ public class Banheiro {
 					//Adiciona a pessoa ao banheiro, mesma coisa
 					vagas.add(pessoa);
 					System.out.println("Homem #" + ((Homem) pessoa).getManId() + " entrou no banheiro");
-					System.out.println("Banheiro com #" + vagas.size() + " pessoa");
+					System.out.println("Banheiro com #" + vagas.size() + " pessoas");
 					notifyAll();
-				}else if(pessoa instanceof Mulher && vagas.get(0) instanceof Mulher){
+				}else if(vagas.get(0) instanceof Homem){
+					System.out.println("Apenas homens podem entrar no momento");
+				}
+				if(pessoa instanceof Mulher && vagas.get(0) instanceof Mulher){
 					vagas.add(pessoa);
 					System.out.println("Mulher #" + ((Mulher) pessoa).getMulherId() + " entrou no banheiro");
-					System.out.println("Banheiro com #" + vagas.size() + " pessoa");
+					System.out.println("Banheiro com #" + vagas.size() + " pessoas");
 					notifyAll();
-				}else{
-					System.out.println("Não se encaixa no padrão do banheiro");
+				}else if(vagas.get(0) instanceof Mulher){
+					System.out.println("Apenas mulheres podem entrar no momento");
 				}
 			}
 		}else{
@@ -58,7 +60,6 @@ public class Banheiro {
 				}else{
 					System.out.println("Mulher #" + ((Mulher) pessoa).getMulherId() + " está se preparando para sair");
 				}
-				wait();
 			}catch(Exception e){
 				e.printStackTrace();
 			}
@@ -66,12 +67,12 @@ public class Banheiro {
 				//Remove a pessoa do banheiro
 				vagas.remove(pessoa);
 				System.out.println("Homem #" + ((Homem) pessoa).getManId() + " saiu do banheiro");
-				System.out.println("Banheiro com #" + vagas.size() + " pessoa");
+				System.out.println("Banheiro com #" + vagas.size() + " pessoa(s)");
 				notifyAll();
 			}else if(pessoa instanceof Mulher && vagas.get(0) instanceof Mulher){
 				vagas.remove(pessoa);
 				System.out.println("Mulher #" + ((Mulher) pessoa).getMulherId() + " saiu do banheiro");
-				System.out.println("Banheiro com #" + vagas.size() + " pessoa");
+				System.out.println("Banheiro com #" + vagas.size() + " pessoa(s)");
 				notifyAll();
 			}else{
 				System.out.println("Não se encaixa no padrão do banheiro");
